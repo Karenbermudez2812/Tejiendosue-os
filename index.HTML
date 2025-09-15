@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tejiendo Sueños – De tus sueños a tus manos</title>
+  <meta name="description" content="Tejiendo Sueños crea piezas artesanales personalizadas en crochet, macramé y mostacilla. Productos únicos hechos a mano, con amor y propósito." />
+  <meta property="og:title" content="Tejiendo Sueños" />
+  <meta property="og:description" content="Artesanías personalizadas en crochet, macramé y mostacilla." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#FFBCE5" />
+
+  <!-- Tipografías (sustituciones cercanas a las del manual) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Alex+Brush&family=Baloo+2:wght@600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --rosa:#FFBCE5;   /* Dulzura, infancia y delicadeza */
+      --azul:#AACCFF;   /* Tranquilidad, calma y seriedad */
+      --amarillo:#FFECA0;/* Felicidad, optimismo y energía */
+      --blanco:#FFFFFF; /* Pureza y limpieza */
+      --texto:#1f2937;  /* gris-900 */
+      --muted:#6b7280;  /* gris-500 */
+      --shadow: 0 10px 30px rgba(0,0,0,.08);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Apple Color Emoji","Segoe UI Emoji"; color:var(--texto); background:var(--blanco);}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+
+    /* Navegación */
+    .nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.8);backdrop-filter:saturate(180%) blur(10px);border-bottom:1px solid #f3f4f6}
+    .nav-inner{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:10px 18px}
+    .brand{display:flex;align-items:center;gap:10px}
+    .brand-logo{width:42px;height:42px;border-radius:999px;background:linear-gradient(135deg,var(--rosa),var(--azul));display:grid;place-items:center;color:#fff;font-weight:700;box-shadow:var(--shadow)}
+    .brand-name{font-family:"Alex Brush", cursive;font-size:1.6rem;color:#111827}
+    .nav-links{display:flex;gap:18px;align-items:center}
+    .nav-links a{padding:10px 12px;border-radius:12px;font-weight:600}
+    .nav-links a:hover{background:#f3f4f6}
+    .hamburger{display:none;background:transparent;border:0;font-size:1.4rem}
+
+    /* Hero */
+    .hero{position:relative;overflow:hidden;background:
+      radial-gradient(1200px 400px at -10% -20%, var(--azul) 0%, transparent 60%),
+      radial-gradient(1000px 380px at 110% 0%, var(--rosa) 0%, transparent 60%),
+      radial-gradient(1000px 380px at 50% 110%, var(--amarillo) 0%, transparent 60%),
+      linear-gradient(#ffffff,#ffffff);
+      padding:80px 18px 60px;
+    }
+    .container{max-width:1200px;margin:auto}
+    .hero-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:28px;align-items:center}
+    .badge{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid #e5e7eb;border-radius:999px;padding:6px 12px;box-shadow:var(--shadow)}
+    .badge b{color:#111827}
+    .title{font-family:"Baloo 2", system-ui; font-size:clamp(2rem,5vw,3.2rem); line-height:1.1; margin:14px 0 10px}
+    .script{font-family:"Alex Brush", cursive; font-size:clamp(1.6rem,4.2vw,2.4rem); color:#4b5563}
+    .hero p{font-size:1.05rem;color:#374151;max-width:55ch}
+    .cta{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:14px;border:0;cursor:pointer;font-weight:700;box-shadow:var(--shadow)}
+    .btn.primary{background:linear-gradient(135deg,var(--rosa),var(--azul));color:#111}
+    .btn.secondary{background:#fff;border:1px solid #e5e7eb}
+
+    /* Nubes decorativas (SVG) */
+    .clouds{position:absolute;inset:0;pointer-events:none;opacity:.25}
+
+    /* Secciones genéricas */
+    section{padding:70px 18px}
+    .section-title{font-family:"Baloo 2";font-size:2rem;margin:0 0 8px}
+    .section-sub{color:var(--muted);margin:0 0 24px}
+
+    /* Productos */
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:#fff;border:1px solid #f3f4f6;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
+    .card-img{aspect-ratio:4/3;background:linear-gradient(135deg,var(--azul),var(--rosa));display:grid;place-items:center;color:#fff;font-weight:700}
+    .chip{position:absolute;top:12px;left:12px;background:#fff;border:1px solid #e5e7eb;border-radius:999px;padding:6px 10px;font-size:.85rem}
+    .card-body{padding:16px}
+    .card h3{margin:0 0 8px}
+    .card p{margin:0;color:#4b5563}
+
+    /* Beneficios */
+    .benefits{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+    .benefit{background:linear-gradient(180deg,#fff, #fbfbfb);border:1px solid #f3f4f6;border-radius:14px;padding:14px;box-shadow:var(--shadow)}
+
+    /* Misión/Visión */
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .panel{background:#fff;border:1px solid #f3f4f6;border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+    .panel h3{margin:0 0 8px}
+
+    /* Testimonios (placeholder) */
+    .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .quote{background:#fff;border:1px solid #f3f4f6;border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+
+    /* Contacto */
+    .contact{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+    .form{background:#fff;border:1px solid #f3f4f6;border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    label{font-weight:600;font-size:.95rem}
+    input, textarea{width:100%;border:1px solid #e5e7eb;border-radius:12px;padding:12px;font:inherit}
+    textarea{min-height:120px;resize:vertical}
+
+    /* Footer */
+    footer{background:#fff;border-top:1px solid #f3f4f6}
+    .footer-grid{max-width:1200px;margin:auto;display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:18px;padding:28px 18px}
+    .socials{display:flex;gap:10px}
+    .pill{display:inline-flex;align-items:center;gap:8px;border:1px solid #e5e7eb;border-radius:999px;padding:8px 12px}
+
+    /* Responsivo */
+    @media (max-width: 980px){
+      .hero-grid, .contact, .grid-2{grid-template-columns:1fr}
+      .cards{grid-template-columns:repeat(2,1fr)}
+      .benefits{grid-template-columns:repeat(3,1fr)}
+      .quotes{grid-template-columns:1fr 1fr}
+      .nav-links{display:none;position:absolute;left:0;right:0;top:60px;background:#fff;border-bottom:1px solid #f3f4f6;padding:10px 18px}
+      .nav-links.open{display:flex;flex-direction:column;gap:6px}
+      .hamburger{display:inline-flex}
+    }
+    @media (max-width: 640px){
+      .cards{grid-template-columns:1fr}
+      .benefits{grid-template-columns:1fr 1fr}
+      .quotes{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <!-- Navegación -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="#inicio" aria-label="Inicio">
+        <span class="brand-logo" aria-hidden="true">TS</span>
+        <span class="brand-name">Tejiendo Sueños</span>
+      </a>
+      <button class="hamburger" aria-label="Abrir menú" onclick="toggleMenu()">☰</button>
+      <div id="menu" class="nav-links" role="navigation" aria-label="Menú principal">
+        <a href="#productos">Productos</a>
+        <a href="#beneficios">Beneficios</a>
+        <a href="#mision">Misión & Visión</a>
+        <a href="#contacto">Contacto</a>
+        <a class="pill" href="https://wa.me/###########?text=Hola%20Tejiendo%20Sue%C3%B1os%2C%20quiero%20un%20pedido%20personalizado" target="_blank" rel="noopener">Whatsapp</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header id="inicio" class="hero">
+    <svg class="clouds" viewBox="0 0 1440 600" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="c1" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color="#fff" stop-opacity="0.9" />
+          <stop offset="100%" stop-color="#fff" stop-opacity="0" />
+        </linearGradient>
+      </defs>
+      <g fill="url(#c1)">
+        <ellipse cx="200" cy="180" rx="180" ry="70"/>
+        <ellipse cx="360" cy="180" rx="140" ry="60"/>
+        <ellipse cx="520" cy="180" rx="180" ry="70"/>
+        <ellipse cx="1080" cy="140" rx="200" ry="80"/>
+        <ellipse cx="1260" cy="140" rx="160" ry="70"/>
+      </g>
+    </svg>
+    <div class="container hero-grid">
+      <div>
+        <span class="badge">💫 <b>Artesanías personalizadas</b> en crochet, macramé y mostacilla</span>
+        <h1 class="title">Hecho a mano, con amor y propósito</h1>
+        <div class="script">De tus sueños a tus manos</div>
+        <p>
+          Creamos piezas únicas que reflejan tu estilo y la identidad cultural: manillas en macramé y mostacilla, y amigurumis tejidos a tu gusto.
+        </p>
+        <div class="cta">
+          <a class="btn primary" href="#productos">Ver productos</a>
+          <a class="btn secondary" href="https://instagram.com/TejiendoSue%C3%B1os123" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+      <div>
+        <!-- Reemplaza el src por tu logo o foto de productos -->
+        <div class="card" aria-label="Muestra de productos">
+          <div class="card-img" role="img" aria-label="Fondo con degradado y nubes">
+            <span style="font-family:'Alex Brush',cursive;font-size:2rem">Tejiendo Sueños</span>
+          </div>
+          <div class="card-body">
+            <p>
+              Sube aquí tu <b>logo</b> o una <b>foto de productos</b> (reemplazando este bloque por una <code>&lt;img src="..." alt="..."&gt;</code>).
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Productos -->
+  <section id="productos" class="container">
+    <h2 class="section-title">Productos</h2>
+    <p class="section-sub">Personalizamos colores, tamaños y estilos según tu preferencia.</p>
+    <div class="cards">
+      <article class="card">
+        <div class="card-img" aria-label="Manillas en macramé">
+          <span>Macramé</span>
+        </div>
+        <div class="card-body">
+          <h3>Manillas en macramé</h3>
+          <p>Variedad de colores y patrones ajustables. Podemos añadir letras o dijes.</p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-img" aria-label="Manillas en mostacilla">
+          <span>Mostacilla</span>
+        </div>
+        <div class="card-body">
+          <h3>Manillas en mostacilla</h3>
+          <p>Tejidas en telar con combinaciones únicas. Diseños geométricos o personalizados.</p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-img" aria-label="Amigurumis tejidos">
+          <span>Amigurumis</span>
+        </div>
+        <div class="card-body">
+          <h3>Amigurumis</h3>
+          <p>Muñecos tejidos a crochet: llaveros, figuras y personajes a tu medida.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tejiendo Sueños – De tus sueños a tus manos</title>
+  <meta name="description" content="Tejiendo Sueños crea piezas artesanales personalizadas en crochet, macramé y mostacilla. Productos únicos hechos a mano, con amor y propósito." />
+  <meta property="og:title" content="Tejiendo Sueños" />
+  <meta property="og:description" content="Artesanías personalizadas en crochet, macramé y mostacilla." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#FFBCE5" />
+
+  <!-- Tipografías -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Alex+Brush&family=Baloo+2:wght@600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --rosa:#FFBCE5;
+      --azul:#AACCFF;
+      --amarillo:#FFECA0;
+      --blanco:#FFFFFF;
+      --texto:#1f2937;
+      --muted:#6b7280;
+      --shadow: 0 10px 30px rgba(0,0,0,.08);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;padding:0;font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Helvetica Neue, Arial;color:var(--texto);background:var(--blanco)}
+    
+    /* ... estilos anteriores omitidos para brevedad ... */
+
+    /* Beneficios */
+    .benefits{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+    .benefit{border:1px solid #f3f4f6;border-radius:14px;padding:14px;box-shadow:var(--shadow);font-weight:600;text-align:center;color:#111}
+    .benefit.rosa{background:var(--rosa)}
+    .benefit.azul{background:var(--azul)}
+    .benefit.amarillo{background:var(--amarillo)}
+    .benefit.blanco{background:var(--blanco)}
+  </style>
+</head>
+<body>
+  <!-- ... contenido anterior ... -->
+
+  <!-- Beneficios -->
+  <section id="beneficios" class="container">
+    <h2 class="section-title">Beneficios</h2>
+    <p class="section-sub">Piezas únicas, hechas para durar y apoyar lo local.</p>
+    <div class="benefits">
+      <div class="benefit rosa">Piezas únicas y personalizadas</div>
+      <div class="benefit azul">Calidad y durabilidad</div>
+      <div class="benefit amarillo">Apoyo a la artesanía local</div>
+      <div class="benefit blanco">Precios justos</div>
+      <div class="benefit rosa">Sensación de exclusividad</div>
+    </div>
+  </section>
+
+  <!-- ... resto del código ... -->
+</body>
+</html>
+
+  </section>
+
+  <!-- Misión / Visión / Valores -->
+  <section id="mision" class="container">
+    <h2 class="section-title">Nuestra esencia</h2>
+    <p class="section-sub">Recuperamos el valor de la artesanía con técnicas tradicionales.</p>
+    <div class="grid-2">
+      <div class="panel">
+        <h3>Misión</h3>
+        <p>Recuperar el valor de la artesanía mediante productos creados con crochet, macramé y mostacilla, sensibilizando sobre su importancia cultural.</p>
+      </div>
+      <div class="panel">
+        <h3>Visión</h3>
+        <p>Que la sociedad reconozca la artesanía tejida, expandiéndonos a nivel nacional con ventas online y difusión en redes sociales.</p>
+      </div>
+    </div>
+    <div class="grid-2" style="margin-top:18px">
+      <div class="panel">
+        <h3>Valores</h3>
+        <ul>
+          <li><b>Innovación:</b> exploramos nuevas ideas y formas de crear.</li>
+          <li><b>Resiliencia:</b> aprendemos de los retos y seguimos creciendo.</li>
+          <li><b>Colaboración:</b> el trabajo en equipo nos hace únicos.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>Arquetipo</h3>
+        <p>El Tierno: amabilidad, ternura y felicidad en cada creación.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonios (placeholder editable) -->
+  <section class="container">
+    <h2 class="section-title">Opiniones</h2>
+    <p class="section-sub">Lo que dicen quienes ya tienen sus piezas.</p>
+    <div class="quotes">
+      <div class="quote">“Me encantó mi manilla personalizada. ¡Detalles hermosos!”</div>
+      <div class="quote">“Excelente calidad y atención. Pedido tal como lo soñé.”</div>
+      <div class="quote">“Los amigurumis son una ternura, perfectos para regalar.”</div>
+    </div>
+  </section>
+
+  <!-- Contacto -->
+  <section id="contacto" class="container">
+    <h2 class="section-title">Hablemos</h2>
+    <p class="section-sub">Cuéntanos tu idea y la tejemos contigo.</p>
+    <div class="contact">
+      <form class="form" onsubmit="return sendMessage(event)">
+        <div class="row">
+          <div>
+            <label for="nombre">Nombre</label>
+            <input id="nombre" name="nombre" required placeholder="Tu nombre" />
+          </div>
+          <div>
+            <label for="whatsapp">WhatsApp</label>
+            <input id="whatsapp" name="whatsapp" placeholder="Ej. 3001234567" />
+          </div>
+        </div>
+        <div style="margin-top:12px">
+          <label for="mensaje">Mensaje</label>
+          <textarea id="mensaje" name="mensaje" required placeholder="Quiero una manilla en mostacilla con tonos rosa y azul...">
+          </textarea>
+        </div>
+        <div class="cta" style="margin-top:14px">
+          <button class="btn primary" type="submit">Enviar por WhatsApp</button>
+          <a class="btn secondary" href="mailto:contacto@tusuenos.co?subject=Pedido%20Tejiendo%20Sue%C3%B1os">Enviar por correo</a>
+        </div>
+      </form>
+      <div class="panel">
+        <h3>Redes sociales</h3>
+        <p>Síguenos para ver novedades, lanzamientos y ofertas.</p>
+        <div class="socials" style="margin:10px 0 18px">
+          <a class="pill" href="https://instagram.com/TejiendoSue%C3%B1os123" target="_blank" rel="noopener">Instagram</a>
+          <a class="pill" href="https://facebook.com/TejiendoSue%C3%B1os" target="_blank" rel="noopener">Facebook</a>
+          <a class="pill" href="https://www.tiktok.com/@Tejiendosue%C3%B1os123" target="_blank" rel="noopener">TikTok</a>
+        </div>
+        <div class="panel" style="background:linear-gradient(135deg,var(--azul),var(--amarillo));color:#111">
+          <h3 style="margin-top:0">Pedidos personalizados</h3>
+          <p style="margin:0">Elige técnica, colores y tamaño. ¡Lo hacemos a tu medida!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="brand" style="margin-bottom:10px">
+          <span class="brand-logo">TS</span>
+          <span class="brand-name">Tejiendo Sueños</span>
+        </div>
+        <p style="color:var(--muted);max-width:46ch">Productos tejidos en crochet, macramé y mostacilla. Hecho a mano en Colombia.</p>
+      </div>
+      <div>
+        <h4 style="margin:0 0 8px">Explora</h4>
+        <nav class="nav-links" style="display:flex;flex-direction:column;gap:6px;padding:0">
+          <a href="#productos">Productos</a>
+          <a href="#beneficios">Beneficios</a>
+          <a href="#mision">Misión & Visión</a>
+          <a href="#contacto">Contacto</a>
+        </nav>
+      </div>
+      <div>
+        <h4 style="margin:0 0 8px">Contacto</h4>
+        <div class="socials">
+          <a class="pill" href="https://wa.me/###########" target="_blank" rel="noopener">WhatsApp</a>
+          <a class="pill" href="mailto:contacto@tusuenos.co">Email</a>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;color:#9ca3af;padding:12px">© <span id="yr"></span> Tejiendo Sueños. Todos los derechos reservados.</div>
+  </footer>
+
+  <script>
+    function toggleMenu(){
+      const menu = document.getElementById('menu');
+      menu.classList.toggle('open');
+    }
+    function sendMessage(e){
+      e.preventDefault();
+      const nombre = document.getElementById('nombre').value.trim();
+      const cel = document.getElementById('whatsapp').value.trim();
+      const msg = document.getElementById('mensaje').value.trim();
+      const base = 'https://wa.me/###########'; // ← Reemplaza con tu número con indicativo, ej: 57XXXXXXXXXX
+      const texto = encodeURIComponent(`Hola, soy ${nombre}. ${msg} Mi WhatsApp: ${cel}`);
+      window.open(`${base}?text=${texto}`, '_blank');
+      return false;
+    }
+    document.getElementById('yr').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
